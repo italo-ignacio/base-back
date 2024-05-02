@@ -39,6 +39,12 @@ interface Body {
  * POST /user
  * @summary Insert User
  * @tags User
+ * @example request - payload example
+ * {
+ *   "name": "test",
+ *   "email": "test@test",
+ *   "password": "test@123"
+ * }
  * @param {InsertUserProps} request.body.required
  * @return {InsertUserResponse} 200 - Successful response - application/json
  * @return {BadRequest} 400 - Bad request response - application/json

@@ -27,15 +27,27 @@ interface Body {
  */
 
 /**
- * @typedef {object} LoginResponse
+ * @typedef {object} LoginPayload
  * @property {string} accessToken.required
  * @property {User} user.required
+ */
+
+/**
+ * @typedef {object} LoginResponse
+ * @property {Messages} message
+ * @property {string} status
+ * @property {LoginPayload} payload
  */
 
 /**
  * POST /login
  * @summary Login
  * @tags Auth
+ * @example request - payload example
+ * {
+ *   "email": "test@test",
+ *   "password": "test@123"
+ * }
  * @param {LoginProps} request.body.required - application/json
  * @return {LoginResponse} 200 - Successful response - application/json
  * @return {BadRequest} 400 - Bad request response - application/json
