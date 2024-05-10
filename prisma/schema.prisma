@@ -8,12 +8,21 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(255)
-  email     String   @unique @db.VarChar(255)
-  password  String
-  createdAt DateTime @default(now()) @db.Timestamptz()
-  updatedAt DateTime @updatedAt @db.Timestamptz()
+  id       Int    @id @default(autoincrement())
+  name     String @db.VarChar(255)
+  email    String
+  phone    String @db.VarChar(15)
+  password String
+  role     Role   @default(common)
+
+  finishedAt DateTime? @db.Timestamptz()
+  createdAt  DateTime  @default(now()) @db.Timestamptz()
+  updatedAt  DateTime  @updatedAt @db.Timestamptz()
 
   @@map("user")
+}
+
+enum Role {
+  common
+  admin
 }

@@ -1,6 +1,8 @@
 import { DataSource } from '@infra/database';
 import { badRequest, errorLogger, forbidden, ok } from '@main/utils';
 import { messages } from '@domain/helpers';
+import { userFindParams } from '@data/search';
+import { userIsOwner } from '@application/helper';
 import type { Controller } from '@application/protocols';
 import type { Request, Response } from 'express';
 
@@ -24,25 +26,19 @@ import type { Request, Response } from 'express';
 export const deleteUserController: Controller =
   () => async (request: Request, response: Response) => {
     try {
-      if (Number(request.params.id) !== Number(request.user.id))
+      if (!userIsOwner(request))
         return forbidden({
-          message: {
-            english: 'delete this user',
-            portuguese: 'deletar este usuário'
-          },
+          message: { english: 'delete this user', portuguese: 'deletar este usuário' },
           response
         });
 
-      await DataSource.user.delete({
-        select: {
-          id: true
-        },
-        where: {
-          id: Number(request.params.id)
-        }
+      const payload = await DataSource.user.update({
+        data: { finishedAt: new Date() },
+        select: userFindParams,
+        where: { id: Number(request.params.id) }
       });
 
-      return ok({ response });
+      return ok({ payload, response });
     } catch (error) {
       errorLogger(error);
       return badRequest({ message: messages.auth.notFound, response });

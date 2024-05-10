@@ -27,17 +27,12 @@ export const findOneUserController: Controller =
     try {
       const payload = await DataSource.user.findUnique({
         select: userFindParams,
-        where: {
-          id: Number(request.params.id)
-        }
+        where: { id: Number(request.params.id) }
       });
 
       if (payload === null)
         return notFound({
-          entity: {
-            english: 'User',
-            portuguese: 'Usuário'
-          },
+          entity: { english: 'User', portuguese: 'Usuário' },
           response
         });
 
