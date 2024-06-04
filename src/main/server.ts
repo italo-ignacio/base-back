@@ -9,7 +9,7 @@ DataSource.$connect()
       const { http } = await import('@main/config');
 
       http.listen(env.API_PORT, () => {
-        console.info(`Server started at http://localhost:${env.API_PORT}`);
+        console.info(`Server started at http://localhost:${env.API_PORT}/api-docs`);
       });
     } else console.info('Environment variables missing');
   })
